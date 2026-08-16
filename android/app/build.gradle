@@ -1,0 +1,42 @@
+plugins{ id "com.android.application" }
+
+android{
+  namespace "com.lewa.app.myapp"
+  compileSdk 34
+
+  defaultConfig{
+    applicationId "com.lewa.app.myapp"
+    minSdk 24
+    targetSdk 34
+    versionCode 1
+    versionName "1.0"
+  }
+
+  buildTypes{
+    release{
+      minifyEnabled false
+      // Signed with the standard debug key so the build installs as-is.
+      // Swap in your own keystore before publishing to the Play Store.
+      signingConfig signingConfigs.debug
+    }
+  }
+  compileOptions{
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+configurations.all{
+  resolutionStrategy{
+    // AndroidX pulls in two generations of the Kotlin standard library, and
+    // the old jdk7/jdk8 split artifacts duplicate classes that moved into the
+    // main one at 1.8 — the build fails on duplicate classes without this.
+    force "org.jetbrains.kotlin:kotlin-stdlib:1.9.24"
+    force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.24"
+    force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24"
+  }
+}
+
+dependencies{
+  implementation "androidx.appcompat:appcompat:1.7.0"
+}
